@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
+import java.util.List;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
@@ -59,6 +61,23 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
+    //Credit to the awesome Udacity Code Reviewers for the helpful code snippet below!
+    private String getFormattedString(List<String> list) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        int size = list.size();
+        if( size > 0) {
+            for ( int i=0; i < size; i++) {
+
+                stringBuilder.append(list.get(i));
+
+                if (i != size -1) {
+                    stringBuilder.append(" \n");
+                }
+            }
+        } return stringBuilder.toString();
+    }
+
     private void populateUI(Sandwich theSandwich) {
 
         //create variables to the TextViews using the Sandwich class
@@ -83,7 +102,7 @@ public class DetailActivity extends AppCompatActivity {
             aka_text_view.setVisibility(View.GONE);
             aka_label.setVisibility(View.GONE);
         } else{
-            aka_text_view.setText(theSandwich.getAlsoKnownAs().toString());
+            aka_text_view.setText(getFormattedString(theSandwich.getAlsoKnownAs()));
         }
 
         if(theSandwich.getDescription().isEmpty()){
@@ -97,7 +116,7 @@ public class DetailActivity extends AppCompatActivity {
             ingredients_text_view.setVisibility(View.GONE);
             ingredients_label.setVisibility(View.GONE);
         } else {
-            ingredients_text_view.setText(theSandwich.getIngredients().toString());
+            ingredients_text_view.setText(getFormattedString(theSandwich.getIngredients()));
         }
 
         if(theSandwich.getPlaceOfOrigin().isEmpty()){
